@@ -6,7 +6,7 @@ const AccessPage: React.FC = () => {
   const access = useAccess();
   return (
     <div>
-      主页
+      <Outlet></Outlet>
     </div>
   );
 };

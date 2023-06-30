@@ -2,23 +2,35 @@ export default [
     {
       path: '/',
       redirect: '/home',
-    },
-    {
-      name: '3D项目',
+  },
+  {
+    name: '主页',
       path: '/home',
       component: './Home',
+  },
+    {
+      name: '数字类型游戏',
+      path: '/number-game',
+      component: './Number',
       routes: [
         {
-          name: '演示',
-          path: '/home/screen',
-          component: './Home/Screen',
+          name: '小熊的家',
+          path: '/number-game/bear',
+          component: './Number/Bear',
         },
       ]
     },
     {
-      name: '权限演示',
-      path: '/access',
-      component: './Access',
+      name: '工具',
+      path: '/tool',
+      component: './Tool',
+      routes: [
+        {
+          name: '去除图片背景',
+          path: '/tool/clear-image-back',
+          component: './Tool/ClearImageBack',
+        },
+      ]
     },
     {
       name: ' CRUD 示例',
