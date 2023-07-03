@@ -1,50 +1,94 @@
-import { Canvas, useFrame } from '@react-three/fiber'
-import React, { useRef, useState } from 'react'
-import { OrbitControls } from '@react-three/drei'
-import ManPage from '@/components/walkMan'
+import React, { useMemo, useRef } from 'react'
+import { Stage, Sprite, Container } from '@pixi/react';
+import back from '@/assets/back.png'
+import cat from '@/assets/sprite12.png'
+import dog from '@/assets/sprite7.png'
+import ribbit from '@/assets/sprite10.png'
+import meat from '@/assets/sprite5.png'
+import guantou from '@/assets/sprite6.png'
+import rot from '@/assets/sprite8.png'
 
-function Box(props:any) {
-  // This reference gives us direct access to the THREE.Mesh object
-  const ref:any = useRef()
-  // Hold state for hovered and clicked events
-  const [hovered, hover] = useState(false)
-  const [clicked, click] = useState(false)
-  // Subscribe this component to the render-loop, rotate the mesh every frame
-  useFrame((state, delta) => (ref.current.rotation.x += delta))
-  // Return the view, these are regular Threejs elements expressed in JSX
-  return (
-    <mesh
-      {...props}
-      ref={ref}
-      scale={clicked ? 1.5 : 1}
-      onClick={(event) => click(!clicked)}
-      onPointerOver={(event) => hover(true)}
-      onPointerOut={(event) => hover(false)}>
-      <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? 'hotpink' : 'orange'} />
-    </mesh>
-  )
-}
 
-const HomePage: React.FC = () => {
-  return (
-    <>
-      <Canvas>
-        <ambientLight />
-        <pointLight position={[100, 100, 100]} />
-        <ManPage />
-        <OrbitControls makeDefault />
-      </Canvas>
+
+
+const BearPage: React.FC = () => {
+  const food = useMemo(() => { 
+    return {
+      meat: [{
+        img:meat,
+        type: 'meat',
+        positions: [{ x: 0, y: 0 }, { x: 50, y: 0 }, {x:-50, y:0}]
+      }],
+      guantou: [{
+        img:guantou,
+        type: 'guantou',
+        positions: [{ x: 0, y: 0 }, { x: 50, y: 0 }, {x:-50, y:0}]
+      }],
+    }
+  }, [meat]) 
+  return ( 
+    <Stage width={1400} height={800}>
+        <Sprite
+        image={back}
+        width={1400}
+        height={800}
+      />
+      {food.meat.map(({ img, positions}) =>
+        <Container position={[150, 150]}>
+          {positions.map((item) =>
+            <Sprite
+                  image={img}
+                  width={80}
+                  height={80}
+                  x={item.x}
+                  y={item.y}
+                />)}
             
-
-      {/* <Canvas style={{width:'1000px', height:'600px'}}>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Box position={[-1.2, 0, 0]} />
-        <Box position={[1.2, 0, 0]} />
-      </Canvas> */}
-      </>
+          </Container>
+      )}
+      {food.guantou.map(({ img, positions}) =>
+        <Container position={[420, 150]}>
+          {positions.map((item) =>
+            <Sprite
+                  image={img}
+                  width={80}
+                  height={80}
+                  x={item.x}
+                  y={item.y}
+                />)}
+            
+          </Container>
+        )}
+       <Sprite
+          image={ rot}
+          width={220}
+          height={220}
+          x={900}
+          y={500}
+          />
+       <Sprite
+          image={ cat}
+          width={180}
+          height={180}
+          x={300}
+          y={500}
+        />
+       <Sprite
+          image={dog}
+          width={200}
+          height={200}
+          x={600}
+          y={500}
+        />
+       <Sprite
+          image={ ribbit}
+          width={220}
+          height={220}
+          x={900}
+          y={500}
+          />
+      </Stage>
   );
 };
 
-export default HomePage;
+export default BearPage;
